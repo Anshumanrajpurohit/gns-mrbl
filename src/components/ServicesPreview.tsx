@@ -3,17 +3,20 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import productMarble from "@/assets/product-marble.jpg";
 import productGranite from "@/assets/product-granite.jpg";
+import marbleTexture from "@/assets/marble-texture.jpg";
 
-const services = [
+const collections = [
   {
     title: "Premium Marble",
-    description: "Italian Carrara, Makrana White, and exotic marble varieties for elegant interiors.",
+    subtitle: "Italian & Indian Origins",
+    description: "From Italian Carrara to Indian Makrana—curated marble collections that define luxury.",
     image: productMarble,
     link: "/products",
   },
   {
     title: "Durable Granite",
-    description: "Black Galaxy, Tan Brown, and quality granite for countertops and flooring.",
+    subtitle: "Timeless Strength",
+    description: "Black Galaxy, Tan Brown, and more—granite that withstands generations with grace.",
     image: productGranite,
     link: "/products",
   },
@@ -21,60 +24,74 @@ const services = [
 
 const ServicesPreview = () => {
   return (
-    <section className="py-24 bg-background">
+    <section className="py-24 md:py-32 bg-secondary">
       <div className="container mx-auto px-4">
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Quality Stone, Honest Service
+          <p className="text-gold text-sm font-medium mb-4 tracking-wider uppercase">
+            Our Stone Collections
+          </p>
+          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
+            Premium Quality,<br />
+            <span className="text-gold">Honest Prices</span>
           </h2>
           <p className="text-muted-foreground text-lg">
-            From supply to custom crafting, we're with you at every step of your home journey.
+            We source directly from the finest quarries, ensuring you get 
+            the best quality at fair prices—no middlemen, no markups.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-          {services.map((service, index) => (
+          {collections.map((collection, index) => (
             <Link
               key={index}
-              to={service.link}
-              className="group relative overflow-hidden rounded-2xl aspect-[4/3] shadow-soft hover:shadow-medium transition-all duration-500"
+              to={collection.link}
+              className="group relative overflow-hidden rounded-2xl bg-card border border-border/50 hover:border-gold/30 shadow-soft hover:shadow-medium transition-all duration-500"
             >
-              <img
-                src={service.image}
-                alt={service.title}
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/40 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-8">
-                <h3 className="font-display text-2xl font-bold text-primary-foreground mb-2">
-                  {service.title}
+              <div className="aspect-[16/10] overflow-hidden">
+                <img
+                  src={collection.image}
+                  alt={collection.title}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+              </div>
+              <div className="p-6 md:p-8">
+                <p className="text-gold text-sm font-medium mb-2">{collection.subtitle}</p>
+                <h3 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-3">
+                  {collection.title}
                 </h3>
-                <p className="text-primary-foreground/80 mb-4">
-                  {service.description}
+                <p className="text-muted-foreground mb-4">
+                  {collection.description}
                 </p>
                 <span className="inline-flex items-center gap-2 text-gold font-medium group-hover:gap-3 transition-all">
-                  Learn More <ArrowRight className="w-4 h-4" />
+                  View Collection <ArrowRight className="w-4 h-4" />
                 </span>
               </div>
             </Link>
           ))}
         </div>
 
-        {/* Custom Services */}
-        <div className="bg-stone rounded-2xl p-8 md:p-12 text-center">
-          <h3 className="font-display text-2xl md:text-3xl font-bold text-stone-foreground mb-4">
-            Custom Design & Crafting
-          </h3>
-          <p className="text-stone-foreground/80 text-lg max-w-2xl mx-auto mb-6">
-            Have a unique vision? Our craftsmen create custom staircases, flooring patterns, 
-            countertops, and more—tailored exactly to your home.
-          </p>
-          <Button variant="default" size="lg" asChild>
-            <Link to="/products">
-              See Our Craftsmanship
-              <ArrowRight className="w-5 h-5" />
-            </Link>
-          </Button>
+        {/* Custom Craftsmanship Banner */}
+        <div 
+          className="relative rounded-2xl overflow-hidden"
+          style={{ backgroundImage: `url(${marbleTexture})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+        >
+          <div className="absolute inset-0 bg-primary/85" />
+          <div className="relative p-8 md:p-12 lg:p-16 text-center">
+            <h3 className="font-display text-2xl md:text-3xl lg:text-4xl font-bold text-primary-foreground mb-4">
+              Custom Design & Craftsmanship
+            </h3>
+            <p className="text-primary-foreground/80 text-lg max-w-2xl mx-auto mb-8">
+              Have a unique vision? Our master craftsmen bring decades of experience 
+              to create bespoke stone solutions—from intricate temple designs to 
+              modern kitchen countertops.
+            </p>
+            <Button variant="hero" size="lg" asChild>
+              <Link to="/craftsmanship">
+                Explore Our Craftsmanship
+                <ArrowRight className="w-5 h-5" />
+              </Link>
+            </Button>
+          </div>
         </div>
       </div>
     </section>
