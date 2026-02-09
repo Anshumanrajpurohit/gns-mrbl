@@ -4,19 +4,19 @@ const testimonials = [
   {
     name: "Priya Naik",
     role: "Homeowner, Porvorim",
-    content: "We trusted Ganpati with our new villa's flooring and they exceeded all expectations. The quality is exceptional and the team treated our home like their own.",
+    content: "Ganpati Marble supplied all the granite for our villa and even crafted a beautiful Tulsi Vrindavan for our courtyard. Their quality and care is unmatched.",
     rating: 5,
   },
   {
     name: "Architect Rajan Desai",
-    role: "Desai & Associates",
-    content: "I've been recommending Ganpati Marble to my clients for over 10 years. Their consistency in quality and honest pricing makes them my go-to supplier.",
+    role: "Desai & Associates, Panjim",
+    content: "I recommend Ganpati to all my clients. They understand stone deeply—from the right material for kitchen platforms to temple-grade marble. Reliable and honest.",
     rating: 5,
   },
   {
     name: "Suresh & Kavita Shetty",
     role: "Homeowners, Mapusa",
-    content: "From our pooja room to kitchen countertops—everything was handled with such care. It feels like family taking care of our home.",
+    content: "From our pooja room marble to the staircase granite—everything was handled with such care. It feels like family taking care of our home.",
     rating: 5,
   },
 ];
@@ -49,15 +49,15 @@ const TestimonialsSection = () => {
         {/* Testimonials Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <p className="text-gold text-sm font-medium mb-4 tracking-wider uppercase">
-            Words from Our Family
+            Words from Our Customers
           </p>
           <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-            Trusted by<br />
-            <span className="text-gold">Indian Families</span>
+            Trusted by Families<br />
+            <span className="text-gold">Across Goa</span>
           </h2>
           <p className="text-muted-foreground text-lg">
-            Our greatest achievement is the trust families place in us. 
-            Here's what they have to say about their experience.
+            Our greatest achievement is the trust customers place in us. 
+            Here's what they say about working with Ganpati Marble & Granite.
           </p>
         </div>
 
@@ -70,19 +70,16 @@ const TestimonialsSection = () => {
             >
               <Quote className="w-10 h-10 text-gold/20 absolute top-6 right-6" />
               
-              {/* Rating */}
               <div className="flex gap-1 mb-6">
                 {[...Array(testimonial.rating)].map((_, i) => (
                   <Star key={i} className="w-4 h-4 fill-gold text-gold" />
                 ))}
               </div>
 
-              {/* Content */}
               <p className="text-foreground leading-relaxed mb-6 relative z-10">
                 "{testimonial.content}"
               </p>
 
-              {/* Author */}
               <div>
                 <p className="font-display text-lg font-semibold text-foreground">
                   {testimonial.name}

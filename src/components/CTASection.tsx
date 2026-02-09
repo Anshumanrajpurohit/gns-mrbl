@@ -6,28 +6,25 @@ import showroomImage from "@/assets/showroom.jpg";
 const CTASection = () => {
   return (
     <section className="py-24 md:py-32 bg-primary relative overflow-hidden">
-      {/* Decorative elements */}
       <div className="absolute top-20 left-10 w-64 h-64 rounded-full bg-gold/5 blur-3xl" />
       <div className="absolute bottom-20 right-10 w-48 h-48 rounded-full bg-gold/10 blur-2xl" />
       
       <div className="container mx-auto px-4 relative">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Content */}
           <div className="text-center lg:text-left">
             <p className="text-gold text-sm font-medium mb-4 tracking-wider uppercase">
               We'd Love to Meet You
             </p>
             <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-primary-foreground mb-6 leading-tight">
-              Visit Our Showroom<br />
+              Visit Our Yard<br />
               <span className="text-gold">in Pilerne, Goa</span>
             </h2>
             <p className="text-primary-foreground/80 text-lg mb-8 max-w-xl mx-auto lg:mx-0">
-              Come experience our collection in person. Touch the stone, explore 
-              options, and let us guide you with honest advice—no pressure, 
-              just helpful conversations.
+              Walk through our stone collection, see slabs up close, and get honest 
+              material guidance. Whether you need granite for a kitchen or marble for 
+              a temple—we'll help you choose right.
             </p>
 
-            {/* Contact Options */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
               <a 
                 href="tel:+919876543210"
@@ -58,11 +55,10 @@ const CTASection = () => {
               </a>
             </div>
 
-            {/* Location & Hours */}
             <div className="flex flex-col sm:flex-row gap-6 text-primary-foreground/70 text-sm mb-10">
               <div className="flex items-start gap-2">
                 <MapPin className="w-5 h-5 mt-0.5 text-gold" />
-                <span>Pilerne Industrial Estate,<br />Bardez, Goa 403511</span>
+                <span>72/2, Pilerne Industrial Estate,<br />Pilerne, Saligao, Goa – 403511</span>
               </div>
               <div className="flex items-start gap-2">
                 <Clock className="w-5 h-5 mt-0.5 text-gold" />
@@ -77,16 +73,14 @@ const CTASection = () => {
             </Button>
           </div>
 
-          {/* Showroom Image */}
           <div className="relative">
             <div className="rounded-2xl overflow-hidden shadow-lifted">
               <img 
                 src={showroomImage} 
-                alt="Ganpati Marble Showroom" 
+                alt="Ganpati Marble & Granite Stone Yard" 
                 className="w-full aspect-[4/3] object-cover"
               />
             </div>
-            {/* Floating card */}
             <div className="absolute -bottom-6 -left-6 bg-background rounded-xl p-5 shadow-medium border border-border max-w-[200px]">
               <p className="font-display text-2xl font-bold text-gold">20+</p>
               <p className="text-muted-foreground text-sm">Years serving Goan families with trust</p>

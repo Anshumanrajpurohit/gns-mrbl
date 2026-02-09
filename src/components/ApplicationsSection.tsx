@@ -8,23 +8,23 @@ import livingFlooring from "@/assets/living-flooring.jpg";
 
 const applications = [
   {
-    title: "Pooja Rooms & Temples",
-    description: "Sacred spaces crafted with pure Makrana marble for divine serenity.",
+    title: "Temples & Spiritual Spaces",
+    description: "Tulsi Vrindavan, temple pillars, steps & sacred stone work crafted with devotion.",
     image: poojaRoom,
   },
   {
-    title: "Grand Staircases",
-    description: "Elegant marble staircases that make a statement in your home.",
+    title: "Villas & Bungalows",
+    description: "Grand staircases, premium flooring & custom stone elements for luxury homes.",
     image: staircaseLuxury,
   },
   {
-    title: "Modern Kitchens",
-    description: "Durable granite countertops that blend beauty with functionality.",
+    title: "Kitchens & Platforms",
+    description: "Durable granite countertops and platforms built for the demands of Indian cooking.",
     image: kitchenGranite,
   },
   {
-    title: "Living Spaces",
-    description: "Premium flooring that transforms your home into a masterpiece.",
+    title: "Hotels & Resorts",
+    description: "Large-scale stone supply and finishing for Goa's hospitality and commercial spaces.",
     image: livingFlooring,
   },
 ];
@@ -36,16 +36,15 @@ const ApplicationsSection = () => {
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 mb-16">
           <div className="max-w-2xl">
             <p className="text-gold text-sm font-medium mb-4 tracking-wider uppercase">
-              For Every Space in Your Home
+              Where Our Stone Goes
             </p>
             <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-              Stone Solutions for<br />
-              <span className="text-gold">Indian Homes</span>
+              Built for Every<br />
+              <span className="text-gold">Space & Purpose</span>
             </h2>
             <p className="text-muted-foreground text-lg">
-              From spiritual sanctuaries to modern living spaces—we understand 
-              the unique needs of Indian homes and bring the perfect stone 
-              for every corner.
+              From sacred temples to modern kitchens, luxury villas to commercial 
+              projects—we supply and craft stone solutions that fit perfectly.
             </p>
           </div>
           <Button variant="elegant" size="lg" asChild>
