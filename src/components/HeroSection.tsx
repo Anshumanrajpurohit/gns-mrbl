@@ -26,36 +26,36 @@ const HeroSection = () => {
           <div className="inline-flex items-center gap-2 bg-gold/20 backdrop-blur-sm border border-gold/30 rounded-full px-4 py-2 mb-8">
             <Sparkles className="w-4 h-4 text-gold" />
             <span className="text-primary-foreground/90 text-sm font-medium">
-              Trusted by Indian Families Since 2004
+              Goa's Trusted Stone Experts · Pilerne, Saligao
             </span>
           </div>
 
           {/* Main Headline */}
           <h1 className="font-display text-4xl md:text-5xl lg:text-7xl font-bold text-primary-foreground leading-[1.1] mb-6">
-            Where Every Stone<br />
-            <span className="text-gold">Tells Your Story</span>
+            Stone That Lasts<br />
+            <span className="text-gold">Generations</span>
           </h1>
 
           {/* Subheadline */}
           <p className="text-primary-foreground/85 text-lg md:text-xl leading-relaxed mb-10 max-w-2xl">
-            Premium marble and granite for Indian homes, crafted with care. 
-            From selection to installation, we bring your vision to life with 
-            honesty, quality, and generations of expertise.
+            Premium granite, marble, vitrified tiles & custom stone crafting for 
+            homes, temples, and commercial spaces. From Tulsi Vrindavan to grand 
+            staircases—we shape stone with skill, care, and generations of trust.
           </p>
           
           {/* Service Highlights */}
           <div className="flex flex-wrap gap-4 mb-10 text-primary-foreground/70 text-sm">
             <span className="flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-gold" />
-              Premium Stone Supply
+              Granite & Marble Supply
             </span>
             <span className="flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-gold" />
-              Custom Design
+              Tulsi Vrindavan & Temple Crafting
             </span>
             <span className="flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-gold" />
-              Expert Installation
+              Custom Design & Installation
             </span>
           </div>
 
@@ -63,13 +63,13 @@ const HeroSection = () => {
           <div className="flex flex-col sm:flex-row gap-4">
             <Button variant="hero" size="xl" asChild>
               <Link to="/products">
-                Explore Collections
+                Explore Our Materials
                 <ArrowRight className="w-5 h-5" />
               </Link>
             </Button>
             <Button variant="heroOutline" size="xl" asChild>
               <Link to="/contact">
-                Visit Our Showroom
+                Visit Our Yard
               </Link>
             </Button>
           </div>

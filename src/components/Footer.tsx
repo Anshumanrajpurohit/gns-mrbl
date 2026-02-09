@@ -8,7 +8,6 @@ const Footer = () => {
 
   return (
     <footer className="bg-foreground text-background">
-      {/* Main Footer */}
       <div className="container mx-auto px-4 py-16 md:py-20">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
           {/* Brand */}
@@ -25,9 +24,9 @@ const Footer = () => {
               </div>
             </div>
             <p className="text-background/70 text-sm leading-relaxed">
-              A trusted family business serving Goan homes with premium 
-              marble and granite since 2004. Quality you can trust, 
-              craftsmanship you can see.
+              Goa's trusted stone experts — granite, marble, vitrified tiles, 
+              Kota stone & custom crafting. Tulsi Vrindavan, temple work, 
+              and premium finishes since 2004.
             </p>
             <div className="flex gap-3">
               <a 
@@ -53,8 +52,8 @@ const Footer = () => {
             <div className="space-y-3">
               {[
                 { path: "/story", label: "Our Story" },
-                { path: "/products", label: "Stone Collections" },
-                { path: "/craftsmanship", label: "Craftsmanship" },
+                { path: "/products", label: "Products & Materials" },
+                { path: "/craftsmanship", label: "Crafting & Custom Work" },
                 { path: "/gallery", label: "Our Work" },
                 { path: "/contact", label: "Contact Us" },
               ].map((link) => (
@@ -98,14 +97,14 @@ const Footer = () => {
               </a>
               <div className="flex items-start gap-3 text-sm text-background/60">
                 <MapPin className="w-4 h-4 flex-shrink-0 mt-0.5" />
-                <span>Pilerne Industrial Estate,<br />Bardez, Goa 403511</span>
+                <span>72/2, Pilerne Industrial Estate,<br />Pilerne, Saligao, Goa – 403511</span>
               </div>
             </div>
           </div>
 
           {/* Hours */}
           <div className="space-y-6">
-            <h4 className="font-display text-lg font-semibold text-background">Showroom Hours</h4>
+            <h4 className="font-display text-lg font-semibold text-background">Yard Hours</h4>
             <div className="space-y-4">
               <div className="flex items-start gap-3 text-sm text-background/60">
                 <Clock className="w-4 h-4 flex-shrink-0 mt-0.5" />
@@ -129,7 +128,6 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Bottom Bar */}
       <div className="border-t border-background/10">
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">

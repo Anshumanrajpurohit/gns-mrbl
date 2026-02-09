@@ -19,8 +19,8 @@ const Navigation = () => {
   const navLinks = [
     { path: "/", label: "Home" },
     { path: "/story", label: "Our Story" },
-    { path: "/products", label: "Collections" },
-    { path: "/craftsmanship", label: "Craftsmanship" },
+    { path: "/products", label: "Products" },
+    { path: "/craftsmanship", label: "Crafting" },
     { path: "/gallery", label: "Our Work" },
     { path: "/contact", label: "Contact" },
   ];
@@ -35,7 +35,6 @@ const Navigation = () => {
     }`}>
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-22">
-          {/* Logo */}
           <Link to="/" className="flex items-center gap-3 group">
             <div className="w-11 h-11 rounded-lg bg-gold/10 border border-gold/30 flex items-center justify-center group-hover:bg-gold/20 transition-colors duration-300">
               <span className="text-gold font-display text-xl font-bold">G</span>
@@ -52,7 +51,6 @@ const Navigation = () => {
             </div>
           </Link>
 
-          {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-8">
             {navLinks.map((link) => (
               <Link
@@ -72,7 +70,6 @@ const Navigation = () => {
             ))}
           </div>
 
-          {/* CTA Buttons */}
           <div className="hidden lg:flex items-center gap-3">
             <a 
               href="https://wa.me/919876543210" 
@@ -86,11 +83,10 @@ const Navigation = () => {
               <span className="hidden xl:inline">WhatsApp</span>
             </a>
             <Button variant={scrolled ? "warm" : "heroGold"} size="sm" asChild>
-              <Link to="/contact">Visit Showroom</Link>
+              <Link to="/contact">Visit Our Yard</Link>
             </Button>
           </div>
 
-          {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
             className={`lg:hidden p-2 transition-colors ${
@@ -103,7 +99,6 @@ const Navigation = () => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
       {isOpen && (
         <div className="lg:hidden bg-background border-t border-border animate-fade-in-down">
           <div className="container mx-auto px-4 py-8 space-y-4">
@@ -139,7 +134,7 @@ const Navigation = () => {
                 <span>Chat on WhatsApp</span>
               </a>
               <Button variant="warm" className="w-full mt-4" asChild>
-                <Link to="/contact">Visit Our Showroom</Link>
+                <Link to="/contact">Visit Our Yard</Link>
               </Button>
             </div>
           </div>
