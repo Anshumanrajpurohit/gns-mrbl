@@ -1,73 +1,88 @@
-# Welcome to your Lovable project
+# Ganpati Marble Goa – Premium Web Experience
 
-## Project info
+Modern React + Node.js codebase for Ganpati Marble Goa (GMG) featuring a personalized marketing site, enquiry workflow, and secure admin dashboard.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## Highlights
 
-## How can I edit this code?
+- Tailored storytelling for owner **Vishan Singh Rajpurohit** with premium white–gold–charcoal art direction.
+- Pages: Home, About, Services, Gallery, Contact, plus `/admin/login` and `/admin/dashboard`.
+- Enquiries persist to MongoDB via secure Express API (`backend/`).
+- Admin dashboard with JWT auth, search, status tagging, and destructive actions.
+- WhatsApp floating CTA, SEO-ready `<head>` tags via `react-helmet-async`, responsive layouts, and accessibility-friendly semantics.
 
-There are several ways of editing your application.
+## Tech Stack
 
-**Use Lovable**
+- **Frontend:** Vite + React 18 + TypeScript, Tailwind CSS, shadcn/ui, React Router, React Query.
+- **Backend:** Node.js + Express + MongoDB + Mongoose, Zod validation, Helmet, CORS, Rate limiting.
+- **Tooling:** Vitest, ESLint, react-hook-form, sonner toasts.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+## Setup
 
-Changes made via Lovable will be committed automatically to this repo.
+```bash
+# install deps
+cd gns-mrbl
+npm install
 
-**Use your preferred IDE**
+# env var for frontend API target
+cp .env.example .env.local
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+# run frontend
+npm run dev
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# backend setup
+cd backend
+npm install
+cp .env.example .env
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Update `.env` files with:
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```env
+VITE_API_URL=http://localhost:5000
 
-**Use GitHub Codespaces**
+PORT=5000
+MONGO_URI=mongodb+srv://...
+MONGO_DB_NAME=ganpati_marble_goa
+JWT_SECRET=super-long-random-string
+JWT_EXPIRES_IN=12h
+ADMIN_DEFAULT_USERNAME=owner
+ADMIN_DEFAULT_PASSWORD=changeThisPassword
+CLIENT_URL=http://localhost:5173
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+The backend bootstraps the first admin user from the default credentials if no admin exists. Afterwards, change the password via Mongo shell.
 
-## What technologies are used for this project?
+## Scripts
 
-This project is built with:
+Frontend (root `package.json`):
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+- `npm run dev` – Vite dev server
+- `npm run build` – Production build
+- `npm run preview` – Preview production build
+- `npm run test` – Vitest suite
 
-## How can I deploy this project?
+Backend (`backend/package.json`):
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+- `npm run dev` – Nodemon server with live reload
+- `npm start` – Production server
 
-## Can I connect a custom domain to my Lovable project?
+## Admin Workflow
 
-Yes, you can!
+1. Navigate to `/admin/login`, sign in with JWT-protected credentials.
+2. `/admin/dashboard` lists enquiries, supports search, status toggle, and deletion.
+3. All API routes live under `/api/*` with rate limiting for enquiry submissions.
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## Deployment Notes
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+- Deploy frontend (e.g., Vercel/Netlify). Ensure `VITE_API_URL` points to your backend domain.
+- Deploy backend (Render, Railway, etc.) with environment variables configured and whitelist `CLIENT_URL`.
+- MongoDB Atlas recommended; enable IP allowlisting.
+
+## Testing & QA Checklist
+
+- `npm run test` for unit tests.
+- Verify contact form submission hits `/api/enquiries` and data appears in `/admin/dashboard`.
+- Smoke test responsive breakpoints and WhatsApp CTA.
+
+Feel free to tailor content or sections inside `src/data/content.ts` to reflect new work, statistics, or photography.

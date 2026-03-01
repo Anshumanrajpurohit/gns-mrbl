@@ -11,14 +11,14 @@ const collections = [
     subtitle: "Premium Natural Stone",
     description: "From Black Galaxy granite to Italian Carrara marble—sourced directly for quality and honest pricing.",
     image: productGranite,
-    link: "/products",
+    link: "/services",
   },
   {
     title: "Tiles & Kota Stone",
     subtitle: "Vitrified · Kota · Rough Stone",
     description: "Complete range of vitrified tiles, Kota stone for flooring, and rough stones for outdoor and structural use.",
     image: productMarble,
-    link: "/products",
+    link: "/services",
   },
 ];
 
@@ -85,7 +85,7 @@ const ServicesPreview = () => {
               slabs, and architectural stone elements. Tradition meets skilled craftsmanship.
             </p>
             <Button variant="hero" size="lg" asChild>
-              <Link to="/craftsmanship">
+              <Link to="/services">
                 Explore Our Craftsmanship
                 <ArrowRight className="w-5 h-5" />
               </Link>

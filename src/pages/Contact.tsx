@@ -1,204 +1,167 @@
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Phone, Mail, MapPin, Clock, MessageCircle, ArrowRight } from "lucide-react";
-import { useState } from "react";
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { companyDetails, serviceOptions } from "@/data/content";
+import { submitEnquiry } from "@/services/api";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Phone, Mail, MapPin, ArrowRight } from "lucide-react";
+import { useSearchParams } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import { toast } from "sonner";
-import showroomImage from "@/assets/showroom.jpg";
+
+const enquirySchema = z.object({
+  name: z.string().min(2, "Name is required"),
+  phone: z.string().min(10, "Valid phone number required"),
+  email: z.string().email("Provide a valid email"),
+  service: z.string().min(2, "Select a service"),
+  message: z.string().min(10, "Tell us more about your requirement"),
+});
+
+type EnquiryForm = z.infer<typeof enquirySchema>;
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    phone: "",
-    email: "",
-    message: "",
+  const [searchParams] = useSearchParams();
+  const defaultService = searchParams.get("service") || "";
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors, isSubmitting },
+    reset,
+  } = useForm<EnquiryForm>({
+    resolver: zodResolver(enquirySchema),
+    defaultValues: {
+      name: "",
+      phone: "",
+      email: "",
+      service: defaultService,
+      message: "",
+    },
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    toast.success("Thank you for reaching out! We'll get back to you shortly.");
-    setFormData({ name: "", phone: "", email: "", message: "" });
-  };
+  const serviceValue = watch("service");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const onSubmit = async (values: EnquiryForm) => {
+    try {
+      await submitEnquiry(values);
+      toast.success("Enquiry submitted. We'll call you shortly.");
+      reset({ name: "", phone: "", email: "", service: "", message: "" });
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Unable to submit enquiry";
+      toast.error(message);
+    }
   };
 
   return (
-    <div className="min-h-screen">
-      <Navigation />
-      
-      {/* Hero */}
-      <section className="pt-32 pb-20 md:pt-40 md:pb-28 bg-secondary relative overflow-hidden">
-        <div className="absolute inset-0 opacity-20 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImEiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCI+PHBhdGggZD0iTTAgMGg2MHY2MEgweiIgZmlsbD0ibm9uZSIvPjxjaXJjbGUgY3g9IjMwIiBjeT0iMzAiIHI9IjEiIGZpbGw9InJnYmEoMCwwLDAsMC4wNCkiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjYSkiLz48L3N2Zz4=')]" />
-        <div className="container mx-auto px-4 relative">
-          <div className="max-w-3xl">
-            <p className="text-gold text-sm font-medium mb-4 tracking-wider uppercase">Get in Touch</p>
-            <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
-              We'd Love to<br />
-              <span className="text-gold">Hear from You</span>
-            </h1>
-            <p className="text-muted-foreground text-lg md:text-xl leading-relaxed">
-              Whether you need material guidance, want to discuss a custom project, 
-              or simply want to see our stone collection—reach out. No pressure, 
-              just honest conversations.
-            </p>
-          </div>
+    <div className="bg-background">
+      <Helmet>
+        <title>Contact Ganpati Marble Goa | Book a Yard Visit or Request a Quote</title>
+        <meta
+          name="description"
+          content="Send enquiries for marble, granite, vitrified tiles, temple crafting, and custom stone work. Visit Ganpati Marble Goa at Pilerne Industrial Estate."
+        />
+      </Helmet>
+
+      <section className="bg-secondary px-4 py-16 md:py-24">
+        <div className="container mx-auto text-center md:text-left">
+          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-gold">Let&apos;s talk stone</p>
+          <h1 className="mt-4 font-display text-4xl md:text-5xl">Share your drawings, ask for samples, or book a visit.</h1>
+          <p className="mt-6 text-lg text-muted-foreground md:max-w-3xl">
+            Expect a call from {companyDetails.owner} or our project desk within 24 hours. We&apos;ll walk you through options for marble, granite, temple work,
+            custom crafting, tiles, Kota, or rough stone supply.
+          </p>
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section className="py-24 md:py-32 bg-background">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-            {/* Contact Form */}
-            <div>
-              <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-4">
-                Send Us an Enquiry
-              </h2>
-              <p className="text-muted-foreground mb-8">
-                Tell us about your project or ask any question. We'll get back to you within 24 hours.
-              </p>
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="name" className="text-foreground font-medium">Your Name *</Label>
-                    <Input
-                      id="name" name="name" placeholder="Enter your name"
-                      value={formData.name} onChange={handleChange} required
-                      className="h-12 rounded-xl bg-card border-border/50 focus:border-gold"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="phone" className="text-foreground font-medium">Phone Number *</Label>
-                    <Input
-                      id="phone" name="phone" type="tel" placeholder="+91 98765 43210"
-                      value={formData.phone} onChange={handleChange} required
-                      className="h-12 rounded-xl bg-card border-border/50 focus:border-gold"
-                    />
-                  </div>
+      <section className="px-4 py-16">
+        <div className="container mx-auto grid gap-12 lg:grid-cols-[1fr,0.85fr]">
+          <div className="rounded-3xl border border-border/60 bg-card p-8 shadow-lifted">
+            <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+              <div className="grid gap-6 md:grid-cols-2">
+                <div className="space-y-2">
+                  <Label htmlFor="name">Name *</Label>
+                  <Input id="name" placeholder="Your full name" {...register("name")} />
+                  {errors.name && <p className="text-sm text-destructive">{errors.name.message}</p>}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="email" className="text-foreground font-medium">Email (Optional)</Label>
-                  <Input
-                    id="email" name="email" type="email" placeholder="your@email.com"
-                    value={formData.email} onChange={handleChange}
-                    className="h-12 rounded-xl bg-card border-border/50 focus:border-gold"
-                  />
+                  <Label htmlFor="phone">Phone *</Label>
+                  <Input id="phone" placeholder="+91 98229 83752" {...register("phone")} />
+                  {errors.phone && <p className="text-sm text-destructive">{errors.phone.message}</p>}
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="message" className="text-foreground font-medium">How Can We Help? *</Label>
-                  <Textarea
-                    id="message" name="message"
-                    placeholder="Tell us about your project—granite for kitchen, marble for flooring, custom Tulsi Vrindavan, or just ask a question..."
-                    value={formData.message} onChange={handleChange} required
-                    className="min-h-[150px] rounded-xl bg-card border-border/50 focus:border-gold resize-none"
-                  />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="email">Email *</Label>
+                <Input id="email" placeholder="you@example.com" {...register("email")} />
+                {errors.email && <p className="text-sm text-destructive">{errors.email.message}</p>}
+              </div>
+              <div className="space-y-2">
+                <Label>Service Interested In *</Label>
+                <Select value={serviceValue || undefined} onValueChange={(value) => setValue("service", value, { shouldValidate: true })}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Choose an option" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {serviceOptions.map((option) => (
+                      <SelectItem key={option} value={option}>
+                        {option}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                {errors.service && <p className="text-sm text-destructive">{errors.service.message}</p>}
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="message">Tell us about your project *</Label>
+                <Textarea id="message" rows={5} placeholder="Floor area, temple size, counter length, drawings..." {...register("message")} />
+                {errors.message && <p className="text-sm text-destructive">{errors.message.message}</p>}
+              </div>
+              <Button type="submit" variant="warm" size="lg" className="w-full md:w-auto" disabled={isSubmitting}>
+                {isSubmitting ? "Sending..." : "Submit Enquiry"}
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </form>
+          </div>
+
+          <div className="space-y-6">
+            <div className="rounded-3xl border border-border/60 bg-card p-8 shadow-soft">
+              <h2 className="font-display text-2xl">Come see the slabs</h2>
+              <p className="mt-4 text-sm text-muted-foreground">Visit our yard at {companyDetails.address}</p>
+              <div className="mt-6 space-y-4 text-sm text-foreground">
+                <a href={`tel:${companyDetails.phoneHref}`} className="flex items-center gap-3 rounded-2xl border border-border/60 px-4 py-3 transition hover:border-gold">
+                  <Phone className="h-4 w-4 text-gold" />
+                  {companyDetails.phone}
+                </a>
+                <a href={`mailto:${companyDetails.email}`} className="flex items-center gap-3 rounded-2xl border border-border/60 px-4 py-3 transition hover:border-gold">
+                  <Mail className="h-4 w-4 text-gold" />
+                  {companyDetails.email}
+                </a>
+                <div className="flex items-start gap-3 rounded-2xl border border-border/60 px-4 py-3">
+                  <MapPin className="mt-1 h-4 w-4 text-gold" />
+                  <span>{companyDetails.address}</span>
                 </div>
-                <Button type="submit" variant="warm" size="lg" className="w-full sm:w-auto">
-                  Send Enquiry <ArrowRight className="w-5 h-5" />
-                </Button>
-              </form>
+              </div>
             </div>
-
-            {/* Contact Info */}
-            <div className="space-y-8">
-              <div className="rounded-2xl overflow-hidden shadow-medium">
-                <img src={showroomImage} alt="Ganpati Marble & Granite Yard" className="w-full aspect-[16/10] object-cover" />
-              </div>
-
-              <div>
-                <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-4">
-                  Visit Our Stone Yard
-                </h2>
-                <p className="text-muted-foreground leading-relaxed mb-8">
-                  Walk through our collection of granite slabs, marble varieties, tiles, 
-                  and see our custom crafting work in person. We're always happy to guide.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <a href="tel:+919876543210"
-                  className="flex items-start gap-4 bg-card rounded-xl p-5 border border-border/50 hover:border-gold/30 transition-all"
-                >
-                  <div className="w-12 h-12 rounded-lg bg-gold/10 flex items-center justify-center flex-shrink-0">
-                    <Phone className="w-5 h-5 text-gold" />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-foreground mb-1">Call Us</p>
-                    <p className="text-muted-foreground text-sm">+91 98765 43210</p>
-                  </div>
-                </a>
-
-                <a href="https://wa.me/919876543210" target="_blank" rel="noopener noreferrer"
-                  className="flex items-start gap-4 bg-card rounded-xl p-5 border border-border/50 hover:border-gold/30 transition-all"
-                >
-                  <div className="w-12 h-12 rounded-lg bg-gold/10 flex items-center justify-center flex-shrink-0">
-                    <MessageCircle className="w-5 h-5 text-gold" />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-foreground mb-1">WhatsApp</p>
-                    <p className="text-muted-foreground text-sm">Chat with us</p>
-                  </div>
-                </a>
-
-                <a href="mailto:info@ganpatimarble.com"
-                  className="flex items-start gap-4 bg-card rounded-xl p-5 border border-border/50 hover:border-gold/30 transition-all"
-                >
-                  <div className="w-12 h-12 rounded-lg bg-gold/10 flex items-center justify-center flex-shrink-0">
-                    <Mail className="w-5 h-5 text-gold" />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-foreground mb-1">Email</p>
-                    <p className="text-muted-foreground text-sm">info@ganpatimarble.com</p>
-                  </div>
-                </a>
-
-                <div className="flex items-start gap-4 bg-card rounded-xl p-5 border border-border/50">
-                  <div className="w-12 h-12 rounded-lg bg-gold/10 flex items-center justify-center flex-shrink-0">
-                    <Clock className="w-5 h-5 text-gold" />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-foreground mb-1">Hours</p>
-                    <p className="text-muted-foreground text-sm">Mon-Sat: 9AM-7PM<br />Sun: 10AM-4PM</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Location */}
-              <div className="bg-card rounded-xl p-5 border border-border/50">
-                <div className="flex items-start gap-4 mb-4">
-                  <div className="w-12 h-12 rounded-lg bg-gold/10 flex items-center justify-center flex-shrink-0">
-                    <MapPin className="w-5 h-5 text-gold" />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-foreground mb-1">Our Location</p>
-                    <p className="text-muted-foreground text-sm">
-                      72/2, Pilerne Industrial Estate,<br />
-                      Pilerne, Saligao, Goa – 403511
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Map */}
-              <div className="rounded-xl overflow-hidden shadow-soft h-[250px]">
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3843.8897989024!2d73.79!3d15.53!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTXCsDMxJzQ4LjAiTiA3M8KwNDcnMjQuMCJF!5e0!3m2!1sen!2sin!4v1234567890"
-                  width="100%" height="100%" style={{ border: 0 }}
-                  allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade"
-                  title="Ganpati Marble & Granite Location"
-                />
-              </div>
+            <div className="overflow-hidden rounded-3xl shadow-soft" style={{ minHeight: 300 }}>
+              <iframe
+                src={companyDetails.googleMapsEmbed}
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Ganpati Marble Goa Location"
+              />
             </div>
           </div>
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 };

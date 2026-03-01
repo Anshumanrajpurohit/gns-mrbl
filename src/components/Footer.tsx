@@ -1,152 +1,108 @@
 import { Link } from "react-router-dom";
-import { Phone, Mail, MapPin, Clock, MessageCircle, ArrowUp } from "lucide-react";
+import { Phone, Mail, MapPin, ArrowUp } from "lucide-react";
+import { companyDetails } from "@/data/content";
+import logo from "@/assets/logo.png";
+import whatsappIcon from "@/assets/whatsapp.png";
+
+const footerLinks = [
+  { label: "Home", path: "/" },
+  { label: "About", path: "/about" },
+  { label: "Services", path: "/services" },
+  { label: "Gallery", path: "/gallery" },
+  { label: "Contact", path: "/contact" },
+  { label: "Admin", path: "/admin/login" },
+];
+
+const hours = [
+  { label: "Monday – Saturday", value: "9:00 AM – 7:00 PM" },
+  { label: "Sunday", value: "10:00 AM – 4:00 PM" },
+];
 
 const Footer = () => {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
   return (
     <footer className="bg-foreground text-background">
-      <div className="container mx-auto px-4 py-16 md:py-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
-          {/* Brand */}
-          <div className="lg:col-span-1 space-y-6">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-lg bg-gold/20 flex items-center justify-center">
-                <span className="text-gold font-display text-xl font-bold">G</span>
-              </div>
-              <div>
-                <h3 className="font-display text-xl font-semibold text-background leading-tight">
-                  Ganpati Marble
-                </h3>
-                <p className="text-xs text-background/60 tracking-wide">& Granite</p>
-              </div>
+      <div className="container mx-auto px-4 py-16">
+        <div className="grid gap-10 lg:grid-cols-4">
+          <div className="space-y-5">
+            <div>
+              <img src={logo} alt="Ganpati Marble Goa" className="mb-3 h-14 w-14 rounded-xl bg-white/90 object-contain p-1 shadow-soft" />
+              <p className="text-sm uppercase tracking-[0.4em] text-gold">Ganpati Marble Goa</p>
+              <h3 className="mt-2 font-display text-2xl">{companyDetails.owner}</h3>
+              <p className="text-xs uppercase tracking-[0.4em] text-background/70">Founder</p>
             </div>
-            <p className="text-background/70 text-sm leading-relaxed">
-              Goa's trusted stone experts — granite, marble, vitrified tiles, 
-              Kota stone & custom crafting. Tulsi Vrindavan, temple work, 
-              and premium finishes since 2004.
+            <p className="text-sm text-background/70">
+              Premium marble, granite, temple crafting, vitrified tiles, Kota stone, and custom fabrications from our yard at Pilerne Industrial Estate.
             </p>
             <div className="flex gap-3">
-              <a 
-                href="https://wa.me/919876543210"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-lg bg-background/10 flex items-center justify-center hover:bg-gold/20 transition-colors"
-              >
-                <MessageCircle className="w-5 h-5 text-background/80" />
-              </a>
-              <a 
-                href="tel:+919876543210"
-                className="w-10 h-10 rounded-lg bg-background/10 flex items-center justify-center hover:bg-gold/20 transition-colors"
-              >
-                <Phone className="w-5 h-5 text-background/80" />
+                <a
+                  href={companyDetails.whatsappHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex h-11 w-11 items-center justify-center rounded-xl bg-background/10 transition hover:bg-gold/25"
+                >
+                  <img src={whatsappIcon} alt="" className="h-5 w-5 object-contain" />
+                </a>
+              <a href={`tel:${companyDetails.phoneHref}`} className="flex h-11 w-11 items-center justify-center rounded-xl bg-background/10 transition hover:bg-gold/25">
+                <Phone className="h-5 w-5" />
               </a>
             </div>
           </div>
 
-          {/* Quick Links */}
-          <div className="space-y-6">
-            <h4 className="font-display text-lg font-semibold text-background">Explore</h4>
-            <div className="space-y-3">
-              {[
-                { path: "/story", label: "Our Story" },
-                { path: "/products", label: "Products & Materials" },
-                { path: "/craftsmanship", label: "Crafting & Custom Work" },
-                { path: "/gallery", label: "Our Work" },
-                { path: "/contact", label: "Contact Us" },
-              ].map((link) => (
-                <Link
-                  key={link.path}
-                  to={link.path}
-                  className="block text-sm text-background/60 hover:text-gold transition-colors"
-                >
-                  {link.label}
-                </Link>
+          <div>
+            <h4 className="font-display text-lg">Navigate</h4>
+            <ul className="mt-4 space-y-2 text-sm text-background/70">
+              {footerLinks.map((link) => (
+                <li key={link.path}>
+                  <Link className="transition hover:text-gold" to={link.path}>
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="space-y-3 text-sm text-background/70">
+            <h4 className="font-display text-lg">Reach Us</h4>
+            <a href={`tel:${companyDetails.phoneHref}`} className="flex items-center gap-3 transition hover:text-gold">
+              <Phone className="h-4 w-4" />
+              {companyDetails.phone}
+            </a>
+            <a href={`mailto:${companyDetails.email}`} className="flex items-center gap-3 transition hover:text-gold">
+              <Mail className="h-4 w-4" />
+              {companyDetails.email}
+            </a>
+            <div className="flex items-start gap-3">
+              <MapPin className="mt-1 h-4 w-4" />
+              <span>{companyDetails.address}</span>
+            </div>
+          </div>
+
+          <div>
+            <h4 className="font-display text-lg">Yard Hours</h4>
+            <div className="mt-4 space-y-2 text-sm text-background/70">
+              {hours.map((slot) => (
+                <p key={slot.label}>
+                  <span className="font-medium text-background">{slot.label}</span>
+                  <br />
+                  {slot.value}
+                </p>
               ))}
             </div>
           </div>
-
-          {/* Contact Info */}
-          <div className="space-y-6">
-            <h4 className="font-display text-lg font-semibold text-background">Get in Touch</h4>
-            <div className="space-y-4">
-              <a
-                href="tel:+919876543210"
-                className="flex items-center gap-3 text-sm text-background/60 hover:text-gold transition-colors"
-              >
-                <Phone className="w-4 h-4 flex-shrink-0" />
-                <span>+91 98765 43210</span>
-              </a>
-              <a
-                href="https://wa.me/919876543210"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 text-sm text-background/60 hover:text-gold transition-colors"
-              >
-                <MessageCircle className="w-4 h-4 flex-shrink-0" />
-                <span>WhatsApp Us</span>
-              </a>
-              <a
-                href="mailto:info@ganpatimarble.com"
-                className="flex items-center gap-3 text-sm text-background/60 hover:text-gold transition-colors"
-              >
-                <Mail className="w-4 h-4 flex-shrink-0" />
-                <span>info@ganpatimarble.com</span>
-              </a>
-              <div className="flex items-start gap-3 text-sm text-background/60">
-                <MapPin className="w-4 h-4 flex-shrink-0 mt-0.5" />
-                <span>72/2, Pilerne Industrial Estate,<br />Pilerne, Saligao, Goa – 403511</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Hours */}
-          <div className="space-y-6">
-            <h4 className="font-display text-lg font-semibold text-background">Yard Hours</h4>
-            <div className="space-y-4">
-              <div className="flex items-start gap-3 text-sm text-background/60">
-                <Clock className="w-4 h-4 flex-shrink-0 mt-0.5" />
-                <div>
-                  <p className="text-background mb-1">Monday – Saturday</p>
-                  <p>9:00 AM – 7:00 PM</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3 text-sm text-background/60">
-                <Clock className="w-4 h-4 flex-shrink-0 mt-0.5 opacity-0" />
-                <div>
-                  <p className="text-background mb-1">Sunday</p>
-                  <p>10:00 AM – 4:00 PM</p>
-                </div>
-              </div>
-            </div>
-            <p className="text-background/50 text-xs italic">
-              Walk-ins welcome. For large projects, we recommend scheduling a consultation.
-            </p>
-          </div>
         </div>
       </div>
-
       <div className="border-t border-background/10">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-sm text-background/50">
-              © {new Date().getFullYear()} Ganpati Marble & Granite. All rights reserved.
-            </p>
-            <div className="flex items-center gap-4">
-              <p className="text-sm text-background/50">
-                Made with care in Goa 🌴
-              </p>
-              <button 
-                onClick={scrollToTop}
-                className="w-10 h-10 rounded-lg bg-background/10 flex items-center justify-center hover:bg-gold/20 transition-colors"
-                aria-label="Scroll to top"
-              >
-                <ArrowUp className="w-5 h-5 text-background/80" />
-              </button>
-            </div>
-          </div>
+        <div className="container mx-auto flex flex-col items-center gap-4 px-4 py-6 text-sm text-background/60 md:flex-row md:justify-between">
+          <p>© {new Date().getFullYear()} Ganpati Marble Goa. All rights reserved.</p>
+          <button
+            onClick={scrollToTop}
+            className="flex h-10 w-10 items-center justify-center rounded-full bg-background/10 transition hover:bg-gold/25"
+            aria-label="Scroll to top"
+          >
+            <ArrowUp className="h-5 w-5" />
+          </button>
         </div>
       </div>
     </footer>

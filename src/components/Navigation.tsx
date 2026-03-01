@@ -1,7 +1,10 @@
 import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { Menu, X, Phone, MessageCircle } from "lucide-react";
+import { Menu, X, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { companyDetails } from "@/data/content";
+import logo from "@/assets/logo.png";
+import whatsappIcon from "@/assets/whatsapp.png";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -9,46 +12,52 @@ const Navigation = () => {
   const location = useLocation();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+    let ticking = false;
+
+    const updateScrolledState = () => {
+      const nextScrolled = window.scrollY > 20;
+      setScrolled((previous) => (previous === nextScrolled ? previous : nextScrolled));
+      ticking = false;
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    const handleScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        window.requestAnimationFrame(updateScrolledState);
+      }
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const navLinks = [
     { path: "/", label: "Home" },
-    { path: "/story", label: "Our Story" },
-    { path: "/products", label: "Products" },
-    { path: "/craftsmanship", label: "Crafting" },
-    { path: "/gallery", label: "Our Work" },
+    { path: "/about", label: "About" },
+    { path: "/services", label: "Services" },
+    { path: "/gallery", label: "Gallery" },
     { path: "/contact", label: "Contact" },
   ];
 
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-      scrolled 
-        ? "bg-background/98 backdrop-blur-md shadow-soft border-b border-border" 
-        : "bg-transparent"
-    }`}>
+    <nav
+      className={`fixed left-0 right-0 top-0 z-50 border-b transition-all duration-500 ${
+        scrolled
+          ? "border-border/60 bg-background/65 backdrop-blur-[12px] shadow-soft"
+          : "border-transparent bg-transparent backdrop-blur-0"
+      }`}
+    >
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-22">
+        <div className="flex h-20 items-center justify-between">
           <Link to="/" className="flex items-center gap-3 group">
-            <div className="w-11 h-11 rounded-lg bg-gold/10 border border-gold/30 flex items-center justify-center group-hover:bg-gold/20 transition-colors duration-300">
-              <span className="text-gold font-display text-xl font-bold">G</span>
-            </div>
-            <div className="hidden sm:block">
-              <h1 className={`font-display text-xl font-semibold leading-tight transition-colors duration-300 ${
-                scrolled ? "text-foreground" : "text-primary-foreground"
-              }`}>
-                Ganpati Marble
-              </h1>
-              <p className={`text-xs tracking-wider transition-colors duration-300 ${
-                scrolled ? "text-muted-foreground" : "text-primary-foreground/70"
-              }`}>& Granite</p>
-            </div>
+            <img
+              src={logo}
+              alt="Ganpati Marble Goa"
+              className="h-11 w-11 rounded-xl border border-gold/30 bg-white/90 object-contain p-1 shadow-soft sm:h-12 sm:w-12 lg:h-14 lg:w-14"
+            />
           </Link>
 
           <div className="hidden lg:flex items-center gap-8">
@@ -56,10 +65,8 @@ const Navigation = () => {
               <Link
                 key={link.path}
                 to={link.path}
-                className={`text-sm font-medium transition-all duration-300 hover:text-gold relative group ${
-                  scrolled 
-                    ? (isActive(link.path) ? "text-gold" : "text-muted-foreground")
-                    : (isActive(link.path) ? "text-gold" : "text-primary-foreground/90")
+                className={`group relative text-sm font-medium transition-all duration-300 hover:text-foreground ${
+                  isActive(link.path) ? "text-gold" : "text-muted-foreground"
                 }`}
               >
                 {link.label}
@@ -70,28 +77,30 @@ const Navigation = () => {
             ))}
           </div>
 
-          <div className="hidden lg:flex items-center gap-3">
-            <a 
-              href="https://wa.me/919876543210" 
-              target="_blank" 
+            <div className="hidden lg:flex items-center gap-4">
+              <Link
+                to="/admin/login"
+                className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              >
+                Admin
+              </Link>
+            <a
+              href={companyDetails.whatsappHref}
+              target="_blank"
               rel="noopener noreferrer"
-              className={`flex items-center gap-2 text-sm font-medium transition-colors duration-300 ${
-                scrolled ? "text-foreground hover:text-gold" : "text-primary-foreground hover:text-gold"
-              }`}
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-border/60 bg-card/90 shadow-soft transition duration-300 hover:scale-105 hover:text-gold"
+              aria-label="Open WhatsApp"
             >
-              <MessageCircle className="w-4 h-4" />
-              <span className="hidden xl:inline">WhatsApp</span>
+              <img src={whatsappIcon} alt="" className="h-6 w-6 object-contain" />
             </a>
-            <Button variant={scrolled ? "warm" : "heroGold"} size="sm" asChild>
-              <Link to="/contact">Visit Our Yard</Link>
+            <Button variant="warm" size="sm" asChild>
+              <Link to="/contact">Get Quote</Link>
             </Button>
           </div>
 
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className={`lg:hidden p-2 transition-colors ${
-              scrolled ? "text-foreground" : "text-primary-foreground"
-            }`}
+            className="lg:hidden p-2 text-foreground"
             aria-label="Toggle menu"
           >
             {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -118,23 +127,26 @@ const Navigation = () => {
             ))}
             <div className="pt-6 border-t border-border space-y-4">
               <a 
-                href="tel:+919876543210" 
+                href={`tel:${companyDetails.phoneHref}`}
                 className="flex items-center gap-3 text-base font-medium text-foreground"
               >
                 <Phone className="w-5 h-5 text-gold" />
-                <span>+91 98765 43210</span>
+                <span>{companyDetails.phone}</span>
               </a>
               <a 
-                href="https://wa.me/919876543210"
+                href={companyDetails.whatsappHref}
                 target="_blank"
                 rel="noopener noreferrer" 
-                className="flex items-center gap-3 text-base font-medium text-foreground"
+                className="flex h-12 w-12 items-center justify-center rounded-full border border-border/60 bg-card shadow-soft transition duration-300 hover:scale-105"
+                aria-label="Open WhatsApp"
               >
-                <MessageCircle className="w-5 h-5 text-gold" />
-                <span>Chat on WhatsApp</span>
+                <img src={whatsappIcon} alt="" className="h-7 w-7 object-contain" />
               </a>
+              <Link to="/admin/login" onClick={() => setIsOpen(false)} className="block text-base font-medium text-muted-foreground">
+                Admin Login
+              </Link>
               <Button variant="warm" className="w-full mt-4" asChild>
-                <Link to="/contact">Visit Our Yard</Link>
+                <Link to="/contact">Get Quote</Link>
               </Button>
             </div>
           </div>

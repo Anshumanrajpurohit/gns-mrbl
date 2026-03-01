@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Phone, MapPin, MessageCircle, Clock } from "lucide-react";
 import showroomImage from "@/assets/showroom.jpg";
+import { companyDetails } from "@/data/content";
 
 const CTASection = () => {
   return (
@@ -27,7 +28,7 @@ const CTASection = () => {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
               <a 
-                href="tel:+919876543210"
+                href={`tel:${companyDetails.phoneHref}`}
                 className="flex items-center gap-4 bg-primary-foreground/10 rounded-xl p-4 hover:bg-primary-foreground/15 transition-colors group"
               >
                 <div className="w-12 h-12 rounded-lg bg-gold/20 flex items-center justify-center">
@@ -35,12 +36,12 @@ const CTASection = () => {
                 </div>
                 <div className="text-left">
                   <p className="text-primary-foreground/70 text-xs uppercase tracking-wide">Call Us</p>
-                  <p className="text-primary-foreground font-medium">+91 98765 43210</p>
+                  <p className="text-primary-foreground font-medium">{companyDetails.phone}</p>
                 </div>
               </a>
               
               <a 
-                href="https://wa.me/919876543210"
+                href={companyDetails.whatsappHref}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-4 bg-primary-foreground/10 rounded-xl p-4 hover:bg-primary-foreground/15 transition-colors group"
@@ -58,7 +59,7 @@ const CTASection = () => {
             <div className="flex flex-col sm:flex-row gap-6 text-primary-foreground/70 text-sm mb-10">
               <div className="flex items-start gap-2">
                 <MapPin className="w-5 h-5 mt-0.5 text-gold" />
-                <span>72/2, Pilerne Industrial Estate,<br />Pilerne, Saligao, Goa – 403511</span>
+                <span>{companyDetails.address}</span>
               </div>
               <div className="flex items-start gap-2">
                 <Clock className="w-5 h-5 mt-0.5 text-gold" />
@@ -82,7 +83,7 @@ const CTASection = () => {
               />
             </div>
             <div className="absolute -bottom-6 -left-6 bg-background rounded-xl p-5 shadow-medium border border-border max-w-[200px]">
-              <p className="font-display text-2xl font-bold text-gold">20+</p>
+              <p className="font-display text-2xl font-bold text-gold">{companyDetails.experienceYears}+</p>
               <p className="text-muted-foreground text-sm">Years serving Goan families with trust</p>
             </div>
           </div>

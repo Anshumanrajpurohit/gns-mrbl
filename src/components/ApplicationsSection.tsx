@@ -48,7 +48,7 @@ const ApplicationsSection = () => {
             </p>
           </div>
           <Button variant="elegant" size="lg" asChild>
-            <Link to="/craftsmanship">
+            <Link to="/services">
               View All Applications
               <ArrowRight className="w-5 h-5" />
             </Link>
@@ -59,7 +59,7 @@ const ApplicationsSection = () => {
           {applications.map((app, index) => (
             <Link
               key={index}
-              to="/craftsmanship"
+              to="/services"
               className="group relative overflow-hidden rounded-2xl aspect-[4/3] shadow-soft hover:shadow-lifted transition-all duration-500"
             >
               <img
