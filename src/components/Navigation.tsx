@@ -56,7 +56,7 @@ const Navigation = () => {
             <img
               src={logo}
               alt="Ganpati Marble Goa"
-              className="h-11 w-11 rounded-xl border border-gold/30 bg-white/90 object-contain p-1 shadow-soft sm:h-12 sm:w-12 lg:h-14 lg:w-14"
+              className="block h-10 w-auto shrink-0 object-contain sm:h-11 lg:h-14 xl:h-16"
             />
           </Link>
 

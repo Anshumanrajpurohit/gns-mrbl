@@ -6,7 +6,7 @@
 !.env.example
 backend/.env
 backend/.env.*
-
+.env.example
 # ==============================
 # NODE / PACKAGE MANAGERS
 # ==============================
