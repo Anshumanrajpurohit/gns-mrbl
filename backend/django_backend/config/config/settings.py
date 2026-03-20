@@ -5,20 +5,29 @@ import dj_database_url
 from corsheaders.defaults import default_headers
 from dotenv import load_dotenv
 
-
+# -------------------------------
+# BASE SETUP
+# -------------------------------
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(BASE_DIR.parents[1] / ".env")
 
+# -------------------------------
+# SECURITY
+# -------------------------------
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "django-insecure-change-me")
-DEBUG = os.getenv("DJANGO_DEBUG", "True").lower() == "true"
 
-ALLOWED_HOSTS = [
-    host.strip()
-    for host in os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
-    if host.strip()
-]
+DEBUG = os.getenv("DJANGO_DEBUG", "False").lower() == "true"
 
+ALLOWED_HOSTS = os.getenv(
+    "DJANGO_ALLOWED_HOSTS",
+    "127.0.0.1,localhost,gns-mrbl.onrender.com"
+).split(",")
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# -------------------------------
+# APPLICATIONS
+# -------------------------------
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -31,11 +40,14 @@ INSTALLED_APPS = [
     "core",
 ]
 
+# -------------------------------
+# MIDDLEWARE
+# -------------------------------
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
-    "django.middleware.common.CommonMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
@@ -44,6 +56,9 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "config.urls"
 
+# -------------------------------
+# TEMPLATES
+# -------------------------------
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -59,13 +74,19 @@ TEMPLATES = [
     }
 ]
 
+# -------------------------------
+# WSGI / ASGI
+# -------------------------------
 WSGI_APPLICATION = "config.wsgi.application"
 ASGI_APPLICATION = "config.asgi.application"
 
-
+# -------------------------------
+# DATABASE (NEON)
+# -------------------------------
 DATABASE_URL = os.getenv("DATABASE_URL")
+
 if not DATABASE_URL:
-    raise RuntimeError("DATABASE_URL is required for the Django database configuration.")
+    raise RuntimeError("DATABASE_URL is required")
 
 DATABASES = {
     "default": dj_database_url.parse(
@@ -75,39 +96,41 @@ DATABASES = {
     )
 }
 
-
+# -------------------------------
+# PASSWORD VALIDATION
+# -------------------------------
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
-    },
+    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
-
+# -------------------------------
+# INTERNATIONALIZATION
+# -------------------------------
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
 
-
-STATIC_URL = "static/"
+# -------------------------------
+# STATIC / MEDIA
+# -------------------------------
+STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
-
+# -------------------------------
+# DEFAULT FIELD
+# -------------------------------
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-
+# -------------------------------
+# DRF
+# -------------------------------
 REST_FRAMEWORK = {
     "DEFAULT_RENDERER_CLASSES": [
         "rest_framework.renderers.JSONRenderer",
@@ -115,13 +138,16 @@ REST_FRAMEWORK = {
     ],
 }
 
-
-CORS_ALLOW_ALL_ORIGINS = True
+# -------------------------------
+# CORS
+# -------------------------------
+CORS_ALLOW_ALL_ORIGINS = True  # OK for now (can restrict later)
 
 CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8080",
+    "https://gns-mrbl.vercel.app",
 ]
 
 CORS_ALLOW_HEADERS = list(default_headers) + [
