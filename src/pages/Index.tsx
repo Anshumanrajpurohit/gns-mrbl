@@ -10,10 +10,10 @@ import CTASection from "@/components/CTASection";
 const Index = () => (
   <>
     <Helmet>
-      <title>Ganpati Marble Goa | Marble, Granite, Temple Crafting & Custom Stone</title>
+      <title>Premium Marble & Granite Solutions | Ganpati Marble Goa</title>
       <meta
         name="description"
-        content="Premium marble, granite, vitrified tiles, Kota stone, and temple crafting in Goa. Visit our stone yard at Pilerne Industrial Estate. Trusted by 2000+ Goan homes."
+        content="Premium Marble & Granite Solutions in Goa, including temple crafting, vitrified tiles, Kota stone, and custom fabrication from Ganpati Marble Goa."
       />
     </Helmet>
     <HeroSection />

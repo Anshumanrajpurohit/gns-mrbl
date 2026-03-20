@@ -1,49 +1,55 @@
 import { createContext, useContext, useMemo, useState, type ReactNode } from "react";
 
-interface AdminUser {
-  username: string;
-  role?: string;
-}
+import type { AdminCredentials, AdminSession } from "@/types/admin";
 
 interface AdminAuthContextValue {
-  token: string | null;
-  admin: AdminUser | null;
-  login: (token: string, adminData?: AdminUser) => void;
+  admin: AdminSession | null;
+  isAuthenticated: boolean;
+  login: (credentials: AdminCredentials) => void;
   logout: () => void;
 }
 
 const AdminAuthContext = createContext<AdminAuthContextValue | undefined>(undefined);
 
-const TOKEN_KEY = "gmg-admin-token";
-const ADMIN_KEY = "gmg-admin-profile";
+const SESSION_KEY = "gmg-admin-session";
+const DEFAULT_USERNAME = import.meta.env.VITE_ADMIN_USERNAME || "admin";
+const DEFAULT_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || "admin123";
 
 export const AdminAuthProvider = ({ children }: { children: ReactNode }) => {
-  const [token, setToken] = useState<string | null>(() => localStorage.getItem(TOKEN_KEY));
-  const [admin, setAdmin] = useState<AdminUser | null>(() => {
-    const stored = localStorage.getItem(ADMIN_KEY);
-    return stored ? (JSON.parse(stored) as AdminUser) : null;
+  const [admin, setAdmin] = useState<AdminSession | null>(() => {
+    const stored = localStorage.getItem(SESSION_KEY);
+    return stored ? (JSON.parse(stored) as AdminSession) : null;
   });
 
-  const login = (newToken: string, adminData?: AdminUser) => {
-    setToken(newToken);
-    localStorage.setItem(TOKEN_KEY, newToken);
+  const login = ({ username, password }: AdminCredentials) => {
+    const normalizedUsername = username.trim();
 
-    if (adminData) {
-      setAdmin(adminData);
-      localStorage.setItem(ADMIN_KEY, JSON.stringify(adminData));
+    if (normalizedUsername !== DEFAULT_USERNAME || password !== DEFAULT_PASSWORD) {
+      throw new Error("Invalid admin credentials");
     }
+
+    const session: AdminSession = {
+      username: normalizedUsername,
+      loggedInAt: new Date().toISOString(),
+    };
+
+    setAdmin(session);
+    localStorage.setItem(SESSION_KEY, JSON.stringify(session));
   };
 
   const logout = () => {
-    setToken(null);
     setAdmin(null);
-    localStorage.removeItem(TOKEN_KEY);
-    localStorage.removeItem(ADMIN_KEY);
+    localStorage.removeItem(SESSION_KEY);
   };
 
   const value = useMemo(
-    () => ({ token, admin, login, logout }),
-    [token, admin],
+    () => ({
+      admin,
+      isAuthenticated: Boolean(admin),
+      login,
+      logout,
+    }),
+    [admin],
   );
 
   return <AdminAuthContext.Provider value={value}>{children}</AdminAuthContext.Provider>;
@@ -51,8 +57,10 @@ export const AdminAuthProvider = ({ children }: { children: ReactNode }) => {
 
 export const useAdminAuth = () => {
   const context = useContext(AdminAuthContext);
+
   if (!context) {
     throw new Error("useAdminAuth must be used within AdminAuthProvider");
   }
+
   return context;
 };

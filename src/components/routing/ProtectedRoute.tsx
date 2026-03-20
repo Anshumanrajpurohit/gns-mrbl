@@ -7,9 +7,9 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
-  const { token } = useAdminAuth();
+  const { isAuthenticated } = useAdminAuth();
 
-  if (!token) {
+  if (!isAuthenticated) {
     return <Navigate to="/admin/login" replace />;
   }
 
