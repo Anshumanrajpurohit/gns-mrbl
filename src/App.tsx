@@ -4,7 +4,6 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
-import { Analytics } from "@vercel/analytics/react";
 import Index from "./pages/Index";
 import About from "./pages/About";
 import OurStory from "./pages/OurStory";
@@ -68,19 +67,9 @@ const App = () => (
             </Routes>
           </BrowserRouter>
         </AdminAuthProvider>
-<<<<<<< HEAD
       </TooltipProvider>
     </QueryClientProvider>
   </HelmetProvider>
 );
 
 export default App;
-=======
-        <Analytics />
-      </TooltipProvider>
-    </QueryClientProvider>
-  </HelmetProvider>
-);
-
-export default App;
->>>>>>> 82d37384edba136dce2029e17f5f54767de61688
