@@ -5,6 +5,7 @@ import { Helmet } from "react-helmet-async";
 import { ArrowRight, Gem, Hammer, BriefcaseBusiness } from "lucide-react";
 import { Link } from "react-router-dom";
 
+import { API_BASE_URL } from "@/config/api";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { fetchCollections, fetchCraftsmanship, fetchWorks } from "@/services/adminApi";
@@ -93,7 +94,7 @@ const AdminDashboard = () => {
             </p>
           </div>
           <Badge variant="outline" className="rounded-full border-gold/40 bg-gold/5 px-4 py-2 text-sm text-foreground">
-            API connected to `http://127.0.0.1:8000/api`
+            API connected to <span className="font-medium">{API_BASE_URL}</span>
           </Badge>
         </div>
 

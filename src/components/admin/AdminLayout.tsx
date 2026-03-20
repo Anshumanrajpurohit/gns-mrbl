@@ -3,6 +3,7 @@ import { Link, NavLink, Outlet } from "react-router-dom";
 import { BriefcaseBusiness, Hammer, LayoutDashboard, LogOut, Menu, PanelsTopLeft, X } from "lucide-react";
 
 import adminLogo from "@/assets/admin-logo.png";
+import { API_BASE_URL } from "@/config/api";
 import { Button } from "@/components/ui/button";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
 
@@ -95,7 +96,7 @@ export const AdminLayout = () => {
               </div>
               <div className="hidden rounded-2xl border border-border/70 bg-card px-4 py-3 text-right shadow-soft sm:block">
                 <p className="text-xs uppercase tracking-[0.24em] text-muted-foreground">Live API</p>
-                <p className="text-sm font-medium text-foreground">http://127.0.0.1:8000/api</p>
+                <p className="text-sm font-medium text-foreground">{API_BASE_URL}</p>
               </div>
             </div>
           </header>

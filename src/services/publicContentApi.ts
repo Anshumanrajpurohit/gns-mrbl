@@ -1,4 +1,4 @@
-import { API_BASE } from "@/types/admin";
+import { API_BASE_URL } from "@/config/api";
 import type {
   PublicCollection,
   PublicCraftsmanship,
@@ -22,21 +22,21 @@ const handleResponse = async <T>(response: Response): Promise<T> => {
 };
 
 export const fetchPublicCollections = async () => {
-  const response = await fetch(`${API_BASE}/collections/`);
+  const response = await fetch(`${API_BASE_URL}/collections/`);
   return handleResponse<PublicCollection[]>(response);
 };
 
 export const fetchPublicCraftsmanship = async () => {
-  const response = await fetch(`${API_BASE}/craftsmanship/`);
+  const response = await fetch(`${API_BASE_URL}/craftsmanship/`);
   return handleResponse<PublicCraftsmanship[]>(response);
 };
 
 export const fetchPublicWorks = async () => {
-  const response = await fetch(`${API_BASE}/work/`);
+  const response = await fetch(`${API_BASE_URL}/work/`);
   return handleResponse<PublicWorkSummary[]>(response);
 };
 
 export const fetchPublicWorkDetail = async (slug: string) => {
-  const response = await fetch(`${API_BASE}/work/${slug}/`);
+  const response = await fetch(`${API_BASE_URL}/work/${slug}/`);
   return handleResponse<PublicWorkDetail>(response);
 };

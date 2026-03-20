@@ -1,5 +1,5 @@
+import { API_BASE_URL } from "@/config/api";
 import {
-  API_BASE,
   type CollectionPayload,
   type CollectionRecord,
   type CraftsmanshipPayload,
@@ -88,7 +88,7 @@ const buildWorkFormData = (payload: WorkPayload) => {
 };
 
 export const fetchCollections = async () => {
-  const response = await fetch(`${API_BASE}/collections/`, {
+  const response = await fetch(`${API_BASE_URL}/collections/`, {
     headers: ADMIN_HEADERS,
   });
 
@@ -96,7 +96,7 @@ export const fetchCollections = async () => {
 };
 
 export const createCollection = async (payload: CollectionPayload) => {
-  const response = await fetch(`${API_BASE}/collections/`, {
+  const response = await fetch(`${API_BASE_URL}/collections/`, {
     method: "POST",
     headers: ADMIN_HEADERS,
     body: buildCollectionFormData(payload),
@@ -106,7 +106,7 @@ export const createCollection = async (payload: CollectionPayload) => {
 };
 
 export const updateCollection = async (id: number, payload: CollectionPayload) => {
-  const response = await fetch(`${API_BASE}/collections/${id}/`, {
+  const response = await fetch(`${API_BASE_URL}/collections/${id}/`, {
     method: "PUT",
     headers: ADMIN_HEADERS,
     body: buildCollectionFormData(payload),
@@ -116,7 +116,7 @@ export const updateCollection = async (id: number, payload: CollectionPayload) =
 };
 
 export const deleteCollection = async (id: number) => {
-  const response = await fetch(`${API_BASE}/collections/${id}/`, {
+  const response = await fetch(`${API_BASE_URL}/collections/${id}/`, {
     method: "DELETE",
     headers: ADMIN_HEADERS,
   });
@@ -125,7 +125,7 @@ export const deleteCollection = async (id: number) => {
 };
 
 export const fetchCraftsmanship = async () => {
-  const response = await fetch(`${API_BASE}/craftsmanship/`, {
+  const response = await fetch(`${API_BASE_URL}/craftsmanship/`, {
     headers: ADMIN_HEADERS,
   });
 
@@ -133,7 +133,7 @@ export const fetchCraftsmanship = async () => {
 };
 
 export const createCraftsmanship = async (payload: CraftsmanshipPayload) => {
-  const response = await fetch(`${API_BASE}/craftsmanship/`, {
+  const response = await fetch(`${API_BASE_URL}/craftsmanship/`, {
     method: "POST",
     headers: ADMIN_HEADERS,
     body: buildCraftsmanshipFormData(payload),
@@ -143,7 +143,7 @@ export const createCraftsmanship = async (payload: CraftsmanshipPayload) => {
 };
 
 export const updateCraftsmanship = async (id: number, payload: CraftsmanshipPayload) => {
-  const response = await fetch(`${API_BASE}/craftsmanship/${id}/`, {
+  const response = await fetch(`${API_BASE_URL}/craftsmanship/${id}/`, {
     method: "PUT",
     headers: ADMIN_HEADERS,
     body: buildCraftsmanshipFormData(payload),
@@ -153,7 +153,7 @@ export const updateCraftsmanship = async (id: number, payload: CraftsmanshipPayl
 };
 
 export const deleteCraftsmanship = async (id: number) => {
-  const response = await fetch(`${API_BASE}/craftsmanship/${id}/`, {
+  const response = await fetch(`${API_BASE_URL}/craftsmanship/${id}/`, {
     method: "DELETE",
     headers: ADMIN_HEADERS,
   });
@@ -162,7 +162,7 @@ export const deleteCraftsmanship = async (id: number) => {
 };
 
 export const fetchWorks = async () => {
-  const response = await fetch(`${API_BASE}/work/`, {
+  const response = await fetch(`${API_BASE_URL}/work/`, {
     headers: ADMIN_HEADERS,
   });
 
@@ -170,7 +170,7 @@ export const fetchWorks = async () => {
 };
 
 export const createWork = async (payload: WorkPayload) => {
-  const response = await fetch(`${API_BASE}/work/`, {
+  const response = await fetch(`${API_BASE_URL}/work/`, {
     method: "POST",
     headers: ADMIN_HEADERS,
     body: buildWorkFormData(payload),
@@ -180,7 +180,7 @@ export const createWork = async (payload: WorkPayload) => {
 };
 
 export const updateWork = async (id: number, payload: WorkPayload) => {
-  const response = await fetch(`${API_BASE}/work/${id}/`, {
+  const response = await fetch(`${API_BASE_URL}/work/${id}/`, {
     method: "PUT",
     headers: ADMIN_HEADERS,
     body: buildWorkFormData(payload),
@@ -190,7 +190,7 @@ export const updateWork = async (id: number, payload: WorkPayload) => {
 };
 
 export const deleteWork = async (id: number) => {
-  const response = await fetch(`${API_BASE}/work/${id}/`, {
+  const response = await fetch(`${API_BASE_URL}/work/${id}/`, {
     method: "DELETE",
     headers: ADMIN_HEADERS,
   });

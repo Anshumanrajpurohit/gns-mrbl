@@ -1,5 +1,3 @@
-export const API_BASE = "http://127.0.0.1:8000/api";
-
 export const publishStatuses = ["draft", "published"] as const;
 export const collectionTypes = ["Marble", "Granite"] as const;
 export const workCategories = [

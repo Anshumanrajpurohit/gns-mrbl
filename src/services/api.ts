@@ -1,3 +1,5 @@
+import { API_BASE_URL } from "@/config/api";
+
 export interface EnquiryPayload {
   name: string;
   phone: string;
@@ -48,8 +50,6 @@ export interface ActivityLogItem {
   createdAt: string;
 }
 
-const API_BASE_URL = (import.meta.env.VITE_API_URL || "http://localhost:5000").replace(/\/$/, "");
-
 const handleResponse = async (response: Response) => {
   const data = await response.json().catch(() => ({}));
   if (!response.ok) {
@@ -60,7 +60,7 @@ const handleResponse = async (response: Response) => {
 };
 
 export const submitEnquiry = async (payload: EnquiryPayload) => {
-  const response = await fetch(`${API_BASE_URL}/api/enquiries`, {
+  const response = await fetch(`${API_BASE_URL}/enquiries`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
@@ -70,7 +70,7 @@ export const submitEnquiry = async (payload: EnquiryPayload) => {
 };
 
 export const loginAdmin = async (credentials: AdminCredentials) => {
-  const response = await fetch(`${API_BASE_URL}/api/admin/login`, {
+  const response = await fetch(`${API_BASE_URL}/admin/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(credentials),
@@ -90,7 +90,7 @@ export const fetchEnquiries = async ({ token, search, contacted }: FetchEnquirie
   if (search) params.append("search", search);
   if (contacted) params.append("contacted", contacted);
 
-  const response = await fetch(`${API_BASE_URL}/api/enquiries?${params.toString()}`, {
+  const response = await fetch(`${API_BASE_URL}/enquiries?${params.toString()}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -100,7 +100,7 @@ export const fetchEnquiries = async ({ token, search, contacted }: FetchEnquirie
 };
 
 export const updateEnquiryStatus = async (token: string, id: string, contacted: boolean) => {
-  const response = await fetch(`${API_BASE_URL}/api/enquiries/${id}/contacted`, {
+  const response = await fetch(`${API_BASE_URL}/enquiries/${id}/contacted`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
@@ -113,7 +113,7 @@ export const updateEnquiryStatus = async (token: string, id: string, contacted: 
 };
 
 export const deleteEnquiry = async (token: string, id: string) => {
-  const response = await fetch(`${API_BASE_URL}/api/enquiries/${id}`, {
+  const response = await fetch(`${API_BASE_URL}/enquiries/${id}`, {
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -124,7 +124,7 @@ export const deleteEnquiry = async (token: string, id: string) => {
 };
 
 export const fetchAdminStats = async (token: string) => {
-  const response = await fetch(`${API_BASE_URL}/api/admin/stats`, {
+  const response = await fetch(`${API_BASE_URL}/admin/stats`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -134,7 +134,7 @@ export const fetchAdminStats = async (token: string) => {
 };
 
 export const fetchLast7DaysStats = async (token: string) => {
-  const response = await fetch(`${API_BASE_URL}/api/admin/stats/last-7-days`, {
+  const response = await fetch(`${API_BASE_URL}/admin/stats/last-7-days`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -144,7 +144,7 @@ export const fetchLast7DaysStats = async (token: string) => {
 };
 
 export const fetchServiceDistribution = async (token: string) => {
-  const response = await fetch(`${API_BASE_URL}/api/admin/stats/service-distribution`, {
+  const response = await fetch(`${API_BASE_URL}/admin/stats/service-distribution`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -154,7 +154,7 @@ export const fetchServiceDistribution = async (token: string) => {
 };
 
 export const fetchActivityLog = async (token: string) => {
-  const response = await fetch(`${API_BASE_URL}/api/admin/activity-log`, {
+  const response = await fetch(`${API_BASE_URL}/admin/activity-log`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -168,7 +168,7 @@ export const fetchTrashEnquiries = async ({ token, search }: { token: string; se
   if (search) params.append("search", search);
   const query = params.toString();
 
-  const response = await fetch(`${API_BASE_URL}/api/admin/enquiries/trash${query ? `?${query}` : ""}`, {
+  const response = await fetch(`${API_BASE_URL}/admin/enquiries/trash${query ? `?${query}` : ""}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -178,7 +178,7 @@ export const fetchTrashEnquiries = async ({ token, search }: { token: string; se
 };
 
 export const restoreEnquiry = async (token: string, id: string) => {
-  const response = await fetch(`${API_BASE_URL}/api/admin/enquiries/${id}/restore`, {
+  const response = await fetch(`${API_BASE_URL}/admin/enquiries/${id}/restore`, {
     method: "PATCH",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -189,7 +189,7 @@ export const restoreEnquiry = async (token: string, id: string) => {
 };
 
 export const fetchNotificationEmail = async (token: string) => {
-  const response = await fetch(`${API_BASE_URL}/api/admin/settings/notification-email`, {
+  const response = await fetch(`${API_BASE_URL}/admin/settings/notification-email`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -199,7 +199,7 @@ export const fetchNotificationEmail = async (token: string) => {
 };
 
 export const updateNotificationEmail = async (token: string, email: string) => {
-  const response = await fetch(`${API_BASE_URL}/api/admin/settings/notification-email`, {
+  const response = await fetch(`${API_BASE_URL}/admin/settings/notification-email`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
