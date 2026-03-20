@@ -123,59 +123,39 @@ const AdminDashboard = () => {
           })}
         </div>
 
-        <div className="grid gap-6 xl:grid-cols-[1.15fr_0.85fr]">
-          <div className="rounded-[1.75rem] border border-border/70 bg-card p-6 shadow-lifted">
-            <div className="flex items-center justify-between gap-4">
-              <div>
-                <p className="text-xs uppercase tracking-[0.3em] text-gold">Recent updates</p>
-                <h3 className="font-display text-3xl text-foreground">Latest content activity</h3>
-              </div>
-            </div>
-            <div className="mt-5 space-y-3">
-              {collectionsQuery.isLoading || craftsmanshipQuery.isLoading || workQuery.isLoading ? (
-                <div className="rounded-2xl border border-border/70 bg-secondary/30 px-4 py-6 text-sm text-muted-foreground">
-                  Loading dashboard data...
-                </div>
-              ) : recentEntries.length === 0 ? (
-                <div className="rounded-2xl border border-border/70 bg-secondary/30 px-4 py-6 text-sm text-muted-foreground">
-                  No content has been created yet.
-                </div>
-              ) : (
-                recentEntries.map((entry) => (
-                  <Link
-                    key={entry.id}
-                    to={entry.route}
-                    className="flex items-center justify-between gap-4 rounded-2xl border border-border/70 bg-secondary/20 px-4 py-4 transition hover:border-gold/40 hover:bg-secondary/40"
-                  >
-                    <div>
-                      <p className="font-medium text-foreground">{entry.title}</p>
-                      <p className="mt-1 text-sm text-muted-foreground">{entry.meta}</p>
-                    </div>
-                    <p className="text-xs uppercase tracking-[0.22em] text-muted-foreground">
-                      {format(new Date(entry.createdAt), "dd MMM")}
-                    </p>
-                  </Link>
-                ))
-              )}
+        <div className="rounded-[1.75rem] border border-border/70 bg-card p-6 shadow-lifted">
+          <div className="flex items-center justify-between gap-4">
+            <div>
+              <p className="text-xs uppercase tracking-[0.3em] text-gold">Recent updates</p>
+              <h3 className="font-display text-3xl text-foreground">Latest content activity</h3>
             </div>
           </div>
-
-          <div className="rounded-[1.75rem] border border-border/70 bg-card p-6 shadow-lifted">
-            <p className="text-xs uppercase tracking-[0.3em] text-gold">Admin routes</p>
-            <h3 className="font-display text-3xl text-foreground">Inside the frontend</h3>
-            <div className="mt-5 space-y-3 text-sm">
-              {[
-                "/admin",
-                "/admin/collections",
-                "/admin/craftsmanship",
-                "/admin/work",
-                "/admin/login",
-              ].map((route) => (
-                <div key={route} className="rounded-2xl border border-border/70 bg-secondary/20 px-4 py-4 font-medium text-foreground">
-                  {route}
-                </div>
-              ))}
-            </div>
+          <div className="mt-6 space-y-3">
+            {collectionsQuery.isLoading || craftsmanshipQuery.isLoading || workQuery.isLoading ? (
+              <div className="rounded-2xl border border-border/70 bg-secondary/30 px-4 py-6 text-sm text-muted-foreground">
+                Loading dashboard data...
+              </div>
+            ) : recentEntries.length === 0 ? (
+              <div className="rounded-2xl border border-border/70 bg-secondary/30 px-4 py-6 text-sm text-muted-foreground">
+                No content has been created yet.
+              </div>
+            ) : (
+              recentEntries.map((entry) => (
+                <Link
+                  key={entry.id}
+                  to={entry.route}
+                  className="flex items-center justify-between gap-4 rounded-2xl border border-border/70 bg-secondary/20 px-4 py-4 transition hover:border-gold/40 hover:bg-secondary/40"
+                >
+                  <div>
+                    <p className="font-medium text-foreground">{entry.title}</p>
+                    <p className="mt-1 text-sm text-muted-foreground">{entry.meta}</p>
+                  </div>
+                  <p className="text-xs uppercase tracking-[0.22em] text-muted-foreground">
+                    {format(new Date(entry.createdAt), "dd MMM")}
+                  </p>
+                </Link>
+              ))
+            )}
           </div>
         </div>
       </section>
