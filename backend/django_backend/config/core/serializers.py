@@ -13,48 +13,31 @@ from .models import (
 )
 
 
-class AbsoluteImageUrlMixin(serializers.ModelSerializer):
+class AbsoluteImageUrlMixin:
     image = serializers.SerializerMethodField()
 
     def get_image(self, obj):
         request = self.context.get("request")
         if not obj.image:
             return None
-        url = obj.image.url
-        return request.build_absolute_uri(url) if request else url
+        if request:
+            return request.build_absolute_uri(obj.image.url)
+        return obj.image.url
 
 
-class CollectionImageSerializer(serializers.ModelSerializer):
-    image = serializers.SerializerMethodField()
-
+class CollectionImageSerializer(AbsoluteImageUrlMixin, serializers.ModelSerializer):
     class Meta:
         model = CollectionImage
         fields = ("id", "image")
 
-    def get_image(self, obj):
-        request = self.context.get("request")
-        if not obj.image:
-            return None
-        url = obj.image.url
-        return request.build_absolute_uri(url) if request else url
 
-
-class WorkImageSerializer(serializers.ModelSerializer):
-    image = serializers.SerializerMethodField()
-
+class WorkImageSerializer(AbsoluteImageUrlMixin, serializers.ModelSerializer):
     class Meta:
         model = WorkImage
         fields = ("id", "image")
 
-    def get_image(self, obj):
-        request = self.context.get("request")
-        if not obj.image:
-            return None
-        url = obj.image.url
-        return request.build_absolute_uri(url) if request else url
 
-
-class CollectionSerializer(AbsoluteImageUrlMixin):
+class CollectionSerializer(AbsoluteImageUrlMixin, serializers.ModelSerializer):
     images = CollectionImageSerializer(many=True, read_only=True)
 
     class Meta:
@@ -82,7 +65,7 @@ class CraftFeatureSerializer(serializers.ModelSerializer):
         fields = ("id", "point")
 
 
-class CraftsmanshipSerializer(AbsoluteImageUrlMixin):
+class CraftsmanshipSerializer(AbsoluteImageUrlMixin, serializers.ModelSerializer):
     features = CraftFeatureSerializer(many=True, read_only=True)
 
     class Meta:
@@ -106,7 +89,7 @@ class ReviewSerializer(serializers.ModelSerializer):
         fields = ("id", "name", "rating", "comment", "created_at")
 
 
-class WorkSerializer(AbsoluteImageUrlMixin):
+class WorkSerializer(AbsoluteImageUrlMixin, serializers.ModelSerializer):
     class Meta:
         model = Work
         fields = (
@@ -124,7 +107,7 @@ class WorkSerializer(AbsoluteImageUrlMixin):
         )
 
 
-class WorkDetailSerializer(AbsoluteImageUrlMixin):
+class WorkDetailSerializer(AbsoluteImageUrlMixin, serializers.ModelSerializer):
     images = WorkImageSerializer(many=True, read_only=True)
     reviews = ReviewSerializer(many=True, read_only=True)
 
