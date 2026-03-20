@@ -8,6 +8,7 @@ import { EmptyState } from "@/components/content/EmptyState";
 import { LoadingState } from "@/components/content/LoadingState";
 import { Button } from "@/components/ui/button";
 import { fetchPublicWorkDetail } from "@/services/publicContentApi";
+import { applyImageFallback, getImageUrl } from "@/utils/getImageUrl";
 
 const WorkDetail = () => {
   const { slug = "" } = useParams();
@@ -29,7 +30,9 @@ const WorkDetail = () => {
     }
 
     const seen = new Set<string>();
-    const urls = [project.image, ...project.images.map((image) => image.image)].filter((value): value is string => Boolean(value));
+    const urls = [project.image, ...project.images.map((image) => image.image)]
+      .map((value) => getImageUrl(value))
+      .filter((value): value is string => Boolean(value));
 
     return urls.filter((url) => {
       if (seen.has(url)) {
@@ -94,7 +97,13 @@ const WorkDetail = () => {
                   <section className="space-y-4">
                     <div className="relative overflow-hidden rounded-3xl bg-secondary/50 shadow-soft">
                       {activeImage ? (
-                        <img src={activeImage} alt={project.title} decoding="async" className="aspect-[4/3] w-full object-cover" />
+                        <img
+                          src={activeImage}
+                          alt={project.title}
+                          decoding="async"
+                          onError={applyImageFallback}
+                          className="aspect-[4/3] w-full object-cover"
+                        />
                       ) : (
                         <div className="flex aspect-[4/3] items-center justify-center text-sm text-muted-foreground">No image</div>
                       )}
@@ -137,6 +146,7 @@ const WorkDetail = () => {
                               alt={`${project.title} preview ${index + 1}`}
                               loading="lazy"
                               decoding="async"
+                              onError={applyImageFallback}
                               className="h-20 w-24 object-cover sm:h-24 sm:w-32"
                             />
                           </button>
@@ -185,6 +195,7 @@ const WorkDetail = () => {
                           alt={`${project.title} gallery ${index + 1}`}
                           loading="lazy"
                           decoding="async"
+                          onError={applyImageFallback}
                           className="aspect-[4/3] w-full object-cover transition duration-500 hover:scale-[1.02]"
                         />
                       </div>

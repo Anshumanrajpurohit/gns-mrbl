@@ -9,6 +9,7 @@ import { LoadingState } from "@/components/content/LoadingState";
 import { Button } from "@/components/ui/button";
 import { fetchPublicCollections } from "@/services/publicContentApi";
 import type { PublicCollection } from "@/types/publicContent";
+import { applyImageFallback, getImageUrl } from "@/utils/getImageUrl";
 
 const collectionFilters = [
   { label: "All", value: "all" },
@@ -60,10 +61,11 @@ const Collections = () => {
             <div className="aspect-[4/3] overflow-hidden bg-secondary/50">
               {collection.image ? (
                 <img
-                  src={collection.image}
+                  src={getImageUrl(collection.image)}
                   alt={collection.name}
                   loading="lazy"
                   decoding="async"
+                  onError={applyImageFallback}
                   className="h-full w-full object-cover transition duration-700 hover:scale-105"
                 />
               ) : (

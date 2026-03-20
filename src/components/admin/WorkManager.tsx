@@ -15,6 +15,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { createWork, deleteWork, fetchWorks, updateWork } from "@/services/adminApi";
 import type { AdminImage, PublishStatus, WorkCategory, WorkPayload, WorkRecord, WorkReview } from "@/types/admin";
 import { publishStatuses, workCategories } from "@/types/admin";
+import { applyImageFallback, getImageUrl } from "@/utils/getImageUrl";
 
 interface WorkFormValues extends WorkPayload {
   existingCoverImage: string | null;
@@ -304,7 +305,14 @@ export const WorkManager = () => {
             worksQuery.data?.map((item) => (
               <article key={item.id} className="overflow-hidden rounded-[1.5rem] border border-border/70 bg-card shadow-soft">
                 <div className="h-44 w-full bg-secondary/40">
-                  {item.image ? <img src={item.image} alt={item.title} className="h-full w-full object-cover" /> : null}
+                  {item.image ? (
+                    <img
+                      src={getImageUrl(item.image)}
+                      alt={item.title}
+                      onError={applyImageFallback}
+                      className="h-full w-full object-cover"
+                    />
+                  ) : null}
                 </div>
                 <div className="space-y-4 p-5">
                   <div className="flex flex-wrap items-start justify-between gap-3">

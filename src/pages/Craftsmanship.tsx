@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet-async";
 import { EmptyState } from "@/components/content/EmptyState";
 import { LoadingState } from "@/components/content/LoadingState";
 import { fetchPublicCraftsmanship } from "@/services/publicContentApi";
+import { applyImageFallback, getImageUrl } from "@/utils/getImageUrl";
 
 const Craftsmanship = () => {
   const craftsmanshipQuery = useQuery({
@@ -58,7 +59,14 @@ const Craftsmanship = () => {
                   <div className={index % 2 === 1 ? "[direction:ltr]" : ""}>
                     <div className="overflow-hidden rounded-3xl bg-secondary/50">
                       {item.image ? (
-                        <img src={item.image} alt={item.title} loading="lazy" decoding="async" className="aspect-[4/3] w-full object-cover" />
+                        <img
+                          src={getImageUrl(item.image)}
+                          alt={item.title}
+                          loading="lazy"
+                          decoding="async"
+                          onError={applyImageFallback}
+                          className="aspect-[4/3] w-full object-cover"
+                        />
                       ) : (
                         <div className="flex aspect-[4/3] items-center justify-center text-sm text-muted-foreground">No image</div>
                       )}

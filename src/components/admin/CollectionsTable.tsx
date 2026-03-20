@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import type { CollectionRecord, PublishStatus } from "@/types/admin";
+import { applyImageFallback, getImageUrl } from "@/utils/getImageUrl";
 
 interface CollectionsTableProps {
   collections: CollectionRecord[];
@@ -65,7 +66,12 @@ export const CollectionsTable = ({
                     <div className="flex min-w-56 items-start gap-4">
                       <div className="h-14 w-14 overflow-hidden rounded-2xl border border-border/60 bg-secondary/50">
                         {collection.image ? (
-                          <img src={collection.image} alt={collection.name} className="h-full w-full object-cover" />
+                          <img
+                            src={getImageUrl(collection.image)}
+                            alt={collection.name}
+                            onError={applyImageFallback}
+                            className="h-full w-full object-cover"
+                          />
                         ) : null}
                       </div>
                       <div className="space-y-1">

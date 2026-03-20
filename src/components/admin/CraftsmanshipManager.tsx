@@ -19,6 +19,7 @@ import {
 } from "@/services/adminApi";
 import type { CraftsmanshipPayload, CraftsmanshipRecord, PublishStatus } from "@/types/admin";
 import { publishStatuses } from "@/types/admin";
+import { applyImageFallback, getImageUrl } from "@/utils/getImageUrl";
 
 interface CraftFormValues extends CraftsmanshipPayload {
   existingImage: string | null;
@@ -281,7 +282,14 @@ export const CraftsmanshipManager = () => {
               <article key={item.id} className="rounded-[1.5rem] border border-border/70 bg-card p-5 shadow-soft">
                 <div className="flex items-start gap-4">
                   <div className="h-20 w-20 overflow-hidden rounded-2xl border border-border/60 bg-secondary/50">
-                    {item.image ? <img src={item.image} alt={item.title} className="h-full w-full object-cover" /> : null}
+                    {item.image ? (
+                      <img
+                        src={getImageUrl(item.image)}
+                        alt={item.title}
+                        onError={applyImageFallback}
+                        className="h-full w-full object-cover"
+                      />
+                    ) : null}
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-center gap-2">

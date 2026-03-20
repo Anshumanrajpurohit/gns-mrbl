@@ -7,6 +7,7 @@ import { EmptyState } from "@/components/content/EmptyState";
 import { LoadingState } from "@/components/content/LoadingState";
 import { Button } from "@/components/ui/button";
 import { fetchPublicWorks } from "@/services/publicContentApi";
+import { applyImageFallback, getImageUrl } from "@/utils/getImageUrl";
 
 const Work = () => {
   const workQuery = useQuery({
@@ -61,10 +62,11 @@ const Work = () => {
                   <div className="aspect-[4/3] bg-secondary/50">
                     {item.image ? (
                       <img
-                        src={item.image}
+                        src={getImageUrl(item.image)}
                         alt={item.title}
                         loading="lazy"
                         decoding="async"
+                        onError={applyImageFallback}
                         className="h-full w-full object-cover transition duration-700 hover:scale-105"
                       />
                     ) : (

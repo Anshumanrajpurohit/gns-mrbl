@@ -18,7 +18,14 @@ def is_admin_request(request) -> bool:
     return str(raw_value).strip().lower() in {"1", "true", "yes"}
 
 
-class CollectionListCreateAPIView(generics.ListCreateAPIView):
+class RequestContextSerializerMixin:
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context["request"] = self.request
+        return context
+
+
+class CollectionListCreateAPIView(RequestContextSerializerMixin, generics.ListCreateAPIView):
     parser_classes = (MultiPartParser, FormParser, JSONParser)
 
     def get_queryset(self):
@@ -39,7 +46,7 @@ class CollectionListCreateAPIView(generics.ListCreateAPIView):
         return CollectionSerializer
 
 
-class CollectionDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+class CollectionDetailAPIView(RequestContextSerializerMixin, generics.RetrieveUpdateDestroyAPIView):
     queryset = Collection.objects.all().prefetch_related("images")
     parser_classes = (MultiPartParser, FormParser, JSONParser)
 
@@ -49,7 +56,7 @@ class CollectionDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
         return CollectionSerializer
 
 
-class CraftsmanshipListCreateAPIView(generics.ListCreateAPIView):
+class CraftsmanshipListCreateAPIView(RequestContextSerializerMixin, generics.ListCreateAPIView):
     queryset = Craftsmanship.objects.all().prefetch_related("features")
     parser_classes = (MultiPartParser, FormParser, JSONParser)
 
@@ -65,7 +72,7 @@ class CraftsmanshipListCreateAPIView(generics.ListCreateAPIView):
         return CraftsmanshipSerializer
 
 
-class CraftsmanshipDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+class CraftsmanshipDetailAPIView(RequestContextSerializerMixin, generics.RetrieveUpdateDestroyAPIView):
     queryset = Craftsmanship.objects.all().prefetch_related("features")
     parser_classes = (MultiPartParser, FormParser, JSONParser)
 
@@ -75,7 +82,7 @@ class CraftsmanshipDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
         return CraftsmanshipSerializer
 
 
-class WorkListCreateAPIView(generics.ListCreateAPIView):
+class WorkListCreateAPIView(RequestContextSerializerMixin, generics.ListCreateAPIView):
     queryset = Work.objects.all().prefetch_related("images", "reviews")
     parser_classes = (MultiPartParser, FormParser, JSONParser)
 
@@ -93,7 +100,7 @@ class WorkListCreateAPIView(generics.ListCreateAPIView):
         return WorkSerializer
 
 
-class WorkDetailByIdAPIView(generics.RetrieveUpdateDestroyAPIView):
+class WorkDetailByIdAPIView(RequestContextSerializerMixin, generics.RetrieveUpdateDestroyAPIView):
     queryset = Work.objects.all().prefetch_related("images", "reviews")
     parser_classes = (MultiPartParser, FormParser, JSONParser)
     lookup_field = "pk"
@@ -104,7 +111,7 @@ class WorkDetailByIdAPIView(generics.RetrieveUpdateDestroyAPIView):
         return WorkDetailSerializer
 
 
-class WorkDetailAPIView(generics.RetrieveAPIView):
+class WorkDetailAPIView(RequestContextSerializerMixin, generics.RetrieveAPIView):
     queryset = Work.objects.filter(status=PublishStatus.PUBLISHED).prefetch_related(
         "images",
         "reviews",

@@ -3,6 +3,7 @@ import { ImagePlus, Trash2, Upload } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import type { AdminImage } from "@/types/admin";
+import { applyImageFallback, getImageUrl } from "@/utils/getImageUrl";
 
 interface ImageUploadProps {
   label: string;
@@ -67,7 +68,7 @@ export const ImageUpload = ({
         <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
           {existingImages.map((image) => (
             <div key={`existing-${image.id}`} className="overflow-hidden rounded-2xl border border-border/70 bg-card shadow-soft">
-              <img src={image.image} alt="" className="h-32 w-full object-cover" />
+              <img src={getImageUrl(image.image)} alt="" onError={applyImageFallback} className="h-32 w-full object-cover" />
               <div className="flex items-center justify-between gap-2 px-3 py-3">
                 <p className="truncate text-xs text-muted-foreground">Saved image</p>
                 {allowRemoveExisting && onRemoveExisting ? (
