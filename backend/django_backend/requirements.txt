@@ -8,3 +8,5 @@ python-dotenv>=1.0,<2.0
 gunicorn
 psycopg2-binary
 dj-database-url
+cloudinary
+django-cloudinary-storage
