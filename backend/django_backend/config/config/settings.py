@@ -20,8 +20,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = os.getenv(
     "DJANGO_ALLOWED_HOSTS",
-    "127.0.0.1,localhost",
-    "gns-mrbl.onrender.com",
+    "127.0.0.1,localhost,gns-mrbl.onrender.com",
 ).split(",")
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
