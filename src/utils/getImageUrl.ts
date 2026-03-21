@@ -9,11 +9,16 @@ export const getImageUrl = (url?: string | null) => {
     return "";
   }
 
-  if (url.startsWith("http")) {
-    return url;
+  const trimmedUrl = url.trim();
+  if (!trimmedUrl) {
+    return "";
   }
 
-  const normalizedPath = url.startsWith("/") ? url : `/${url}`;
+  if (/^https?:\/\//i.test(trimmedUrl)) {
+    return trimmedUrl;
+  }
+
+  const normalizedPath = trimmedUrl.startsWith("/") ? trimmedUrl : `/${trimmedUrl}`;
   return `${mediaOrigin}${normalizedPath}`;
 };
 
@@ -25,3 +30,4 @@ export const applyImageFallback = (event: SyntheticEvent<HTMLImageElement>) => {
   event.currentTarget.dataset.fallbackApplied = "true";
   event.currentTarget.src = "/fallback.jpg";
 };
+

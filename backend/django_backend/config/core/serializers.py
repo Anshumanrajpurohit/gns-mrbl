@@ -17,12 +17,22 @@ class AbsoluteImageUrlMixin:
     image = serializers.SerializerMethodField()
 
     def get_image(self, obj):
-        request = self.context.get("request")
         if not obj.image:
             return None
+
+        stored_value = str(obj.image)
+        if stored_value.startswith(("http://", "https://")):
+            return stored_value
+
+        resolved_url = obj.image.url
+        if resolved_url.startswith(("http://", "https://")):
+            return resolved_url
+
+        request = self.context.get("request")
         if request:
-            return request.build_absolute_uri(obj.image.url)
-        return obj.image.url
+            return request.build_absolute_uri(resolved_url)
+
+        return resolved_url
 
 
 class CollectionImageSerializer(AbsoluteImageUrlMixin, serializers.ModelSerializer):
@@ -345,3 +355,4 @@ class WorkWriteSerializer(JsonPayloadMixin, serializers.ModelSerializer):
 
     def to_representation(self, instance):
         return WorkDetailSerializer(instance, context=self.context).data
+
